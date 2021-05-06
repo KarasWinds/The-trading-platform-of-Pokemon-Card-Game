@@ -1,21 +1,27 @@
 package global
 
-type card struct {
+type Card struct {
 	ID   int    `gorm:"primary_key;auto_increase"`
-	name string `json:"name"`
+	Name string `json:"name"`
 }
 
-type orders struct {
-	ID      int     `gorm:"primary_key;auto_increase"`
-	trader  string  `json:"trader"`
-	card_ID int     `json:"card_ID"`
-	price   float32 `json:"price"`
+type Trader struct {
+	ID int `gorm:"primary_key;auto_increase"`
 }
 
-type trades struct {
-	ID      int     `gorm:"primary_key;auto_increase"`
-	buy     string  `json:"buy"`
-	sell    string  `json:"sell"`
-	card_ID int     `json:"card_ID"`
-	price   float32 `json:"price"`
+type Order struct {
+	ID       int     `gorm:"primary_key;auto_increase"`
+	Price    float32 `json:"price"`
+	CardID   int     `json:"card_ID"`
+	Card     Card
+	TraderID int `json:"trader_ID"`
+	Trader   Trader
+	status   bool `json:"status"`
+}
+
+type Trade struct {
+	ID     int     `gorm:"primary_key;auto_increase"`
+	Price  float32 `json:"price"`
+	CardID int     `json:"card_ID"`
+	Card   Card
 }

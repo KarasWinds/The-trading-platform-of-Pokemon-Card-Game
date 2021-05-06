@@ -7,7 +7,7 @@ Database:
   DBType: mysql
   Username: test
   Password: test
-  Host: mysql:3306
+  Host: localhost:3306
   DBName: pokemon
   Charset: utf8
   ParseTime: True
