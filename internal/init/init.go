@@ -1,10 +1,11 @@
-package global
+package init
 
 import (
 	"flag"
 	"log"
 	"strings"
 
+	"github.com/KarasWinds/The-trading-platform-of-Pokemon-Card-Game/global"
 	"github.com/KarasWinds/The-trading-platform-of-Pokemon-Card-Game/pkg/db"
 	"github.com/KarasWinds/The-trading-platform-of-Pokemon-Card-Game/pkg/setting"
 )
@@ -40,11 +41,11 @@ func setupSetting() error {
 	if err != nil {
 		return err
 	}
-	err = setting.ReadSection("Server", &ServerSetting)
+	err = setting.ReadSection("Server", &global.ServerSetting)
 	if err != nil {
 		return err
 	}
-	err = setting.ReadSection("Database", &DatabaseSetting)
+	err = setting.ReadSection("Database", &global.DatabaseSetting)
 	if err != nil {
 		return err
 	}
@@ -54,7 +55,7 @@ func setupSetting() error {
 
 func setupDBEngine() error {
 	var err error
-	DBEngine, err = db.NewDBEngine(DatabaseSetting)
+	global.DBEngine, err = db.NewDBEngine(global.DatabaseSetting)
 	if err != nil {
 		return err
 	}

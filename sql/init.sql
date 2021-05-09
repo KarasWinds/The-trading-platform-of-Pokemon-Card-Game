@@ -19,8 +19,10 @@ DROP TABLE IF EXISTS `orders`;
 CREATE TABLE IF NOT EXISTS `orders` (
   `id` int(20) NOT NULL AUTO_INCREMENT,
   `price` float DEFAULT NULL,
+  `type` varchar(10) DEFAULT NULL,
   `card_id` int(20) DEFAULT NULL,
   `trader_id` int(20) DEFAULT NULL,
+  `status` TINYINT(1) NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_orders_card` (`card_id`),
   KEY `fk_orders_trader` (`trader_id`),
