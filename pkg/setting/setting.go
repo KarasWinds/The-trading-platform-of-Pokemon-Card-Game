@@ -1,6 +1,8 @@
 package setting
 
 import (
+	"strings"
+
 	"github.com/fsnotify/fsnotify"
 	"github.com/spf13/viper"
 )
@@ -9,15 +11,13 @@ type Setting struct {
 	vp *viper.Viper
 }
 
-func NewSetting(configs ...string) (*Setting, error) {
+func NewSetting(config string) (*Setting, error) {
 	vp := viper.New()
-	vp.SetConfigName("config")
-	for _, config := range configs {
-		if config != "" {
-			vp.AddConfigPath(config)
-		}
-	}
 	vp.SetConfigType("yaml")
+	vp.AddConfigPath(config)
+	vp.AutomaticEnv()
+	vp.SetEnvKeyReplacer(strings.NewReplacer(".", "_"))
+	vp.SetConfigName("config")
 	err := vp.ReadInConfig()
 	if err != nil {
 		return nil, err

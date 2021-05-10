@@ -3,7 +3,6 @@ package init
 import (
 	"flag"
 	"log"
-	"strings"
 	"testing"
 
 	"github.com/KarasWinds/The-trading-platform-of-Pokemon-Card-Game/global"
@@ -38,7 +37,7 @@ func setupFlag() error {
 }
 
 func setupSetting() error {
-	setting, err := setting.NewSetting(strings.Split(config, ",")...)
+	setting, err := setting.NewSetting(config)
 	if err != nil {
 		return err
 	}
