@@ -1,6 +1,8 @@
 package model
 
 import (
+	"strconv"
+
 	"gorm.io/gorm"
 )
 
@@ -14,14 +16,14 @@ type Trader struct {
 }
 
 type Order struct {
-	ID        int     `gorm:"primary_key;auto_increase"`
-	Price     float32 `json:"price"`
-	OrderType string  `json:"order_type"`
-	CardID    int     `json:"card_ID"`
-	Card      Card
-	TraderID  int `json:"trader_ID"`
-	Trader    Trader
-	Status    bool `json:"status"`
+	ID       int     `gorm:"primary_key;auto_increase"`
+	Price    float32 `json:"price"`
+	Type     string  `json:"order_type"`
+	CardID   int     `json:"card_ID"`
+	Card     Card
+	TraderID int `json:"trader_ID"`
+	Trader   Trader
+	Status   bool `json:"status"`
 }
 
 type Trade struct {
@@ -32,6 +34,7 @@ type Trade struct {
 }
 
 func (o Order) Create(db *gorm.DB) error {
+
 	return db.Create(&o).Error
 }
 
@@ -49,7 +52,8 @@ func (tr Trader) Create(db *gorm.DB) error {
 
 func (o Order) ListWithTrader(db *gorm.DB, trader Trader) ([]*Order, error) {
 	var orders []*Order
-	if err := db.Where("trader_id = ?", trader.ID).Find(&orders).Limit(50).Error; err != nil {
+	traderID := strconv.Itoa(trader.ID)
+	if err := db.Where("trader_id = ?", traderID).Find(&orders).Limit(50).Error; err != nil {
 		return nil, err
 	}
 	return orders, nil
@@ -57,7 +61,8 @@ func (o Order) ListWithTrader(db *gorm.DB, trader Trader) ([]*Order, error) {
 
 func (t Trade) ListWithCard(db *gorm.DB, card Card) ([]*Trade, error) {
 	var trades []*Trade
-	if err := db.Where("card_id = ?", card.ID).Find(&trades).Limit(50).Error; err != nil {
+	cardID := strconv.Itoa(card.ID)
+	if err := db.Where("card_id = ?", cardID).Find(&trades).Limit(50).Error; err != nil {
 		return nil, err
 	}
 	return trades, nil
@@ -65,7 +70,7 @@ func (t Trade) ListWithCard(db *gorm.DB, card Card) ([]*Trade, error) {
 
 func (o Order) GetMaxBuyWithCard(db *gorm.DB, card Card) (*Order, error) {
 	order := new(Order)
-	if err := db.Where("caed_id = ? AND type = ? AND status = ?", card.ID, "buy", false).Order("price DESC").Find(&order).Limit(1).Error; err != nil {
+	if err := db.Where("card_id = ? AND type = ? AND status = ?", card.ID, "buy", false).Order("price DESC").Find(&order).Limit(1).Error; err != nil {
 		return order, err
 	}
 	return order, nil
@@ -73,7 +78,7 @@ func (o Order) GetMaxBuyWithCard(db *gorm.DB, card Card) (*Order, error) {
 
 func (o Order) GetMinSellWithCard(db *gorm.DB, card Card) (*Order, error) {
 	order := new(Order)
-	if err := db.Where("caed_id = ? AND type = ? AND status = ?", card.ID, "sell", false).Order("price").Find(&order).Limit(1).Error; err != nil {
+	if err := db.Where("card_id = ? AND type = ? AND status = ?", card.ID, "sell", false).Order("price").Find(&order).Limit(1).Error; err != nil {
 		return order, err
 	}
 	return order, nil

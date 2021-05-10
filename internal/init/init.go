@@ -4,6 +4,7 @@ import (
 	"flag"
 	"log"
 	"strings"
+	"testing"
 
 	"github.com/KarasWinds/The-trading-platform-of-Pokemon-Card-Game/global"
 	"github.com/KarasWinds/The-trading-platform-of-Pokemon-Card-Game/pkg/db"
@@ -31,8 +32,8 @@ func init() {
 
 func setupFlag() error {
 	flag.StringVar(&config, "config", "../../configs/", "指定要使用的設定檔路徑")
+	testing.Init()
 	flag.Parse()
-
 	return nil
 }
 

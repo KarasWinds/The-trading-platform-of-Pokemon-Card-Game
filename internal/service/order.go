@@ -1,11 +1,13 @@
 package service
 
-import "github.com/KarasWinds/The-trading-platform-of-Pokemon-Card-Game/internal/model"
+import (
+	"github.com/KarasWinds/The-trading-platform-of-Pokemon-Card-Game/internal/model"
+)
 
 type CreateOrderRequest struct {
 	TraderID  int     `form:"trader_id"`
 	CardID    int     `form:"card_id"`
-	Price     float32 `form:"price" binding:"min=0 max=10"`
+	Price     float32 `form:"price" binding:"min=1,max=10"`
 	OrderType string  `form:"order_type"`
 	Status    bool
 }
@@ -13,7 +15,7 @@ type CreateOrderRequest struct {
 type QueryOrderRequest struct {
 	TraderID  int     `form:"trader_id"`
 	CardID    int     `form:"card_id"`
-	Price     float32 `form:"price" binding:"min=0 max=10"`
+	Price     float32 `form:"price" binding:"gte=1,lte=10"`
 	OrderType string  `form:"order_type"`
 	Status    bool
 }

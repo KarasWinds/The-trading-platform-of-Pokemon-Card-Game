@@ -15,11 +15,11 @@ func New(engine *gorm.DB) *Dao {
 
 func (d *Dao) CreateOrder(traderID int, cardID int, price float32, orderType string) error {
 	order := model.Order{
-		CardID:    cardID,
-		TraderID:  traderID,
-		Price:     price,
-		OrderType: orderType,
-		Status:    false,
+		CardID:   cardID,
+		TraderID: traderID,
+		Price:    price,
+		Type:     orderType,
+		Status:   false,
 	}
 	return order.Create(d.engine)
 }
@@ -74,11 +74,11 @@ func (d *Dao) CompleteOrderAndCreateTrade(orderID int, tradePrice float32, trade
 		ID: orderID,
 	}
 	newOrder := model.Order{
-		CardID:    cardID,
-		TraderID:  traderID,
-		Price:     price,
-		OrderType: orderType,
-		Status:    true,
+		CardID:   cardID,
+		TraderID: traderID,
+		Price:    price,
+		Type:     orderType,
+		Status:   true,
 	}
 	trade := model.Trade{
 		CardID: cardID,

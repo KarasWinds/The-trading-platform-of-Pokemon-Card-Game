@@ -1,8 +1,6 @@
 Server:
   RunMode: debug
-  HttpPort: 80
-  ReadTimeout: 60
-  WriteTimeout: 60
+  HttpPort: 8080
 Database:
   DBType: mysql
   Username: test
