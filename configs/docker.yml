@@ -1,0 +1,11 @@
+Server:
+  RunMode: debug
+  HttpPort: 80
+Database:
+  DBType: mysql
+  Username: test
+  Password: test
+  Host: mysql:3306
+  DBName: pokemon
+  Charset: utf8
+  ParseTime: True

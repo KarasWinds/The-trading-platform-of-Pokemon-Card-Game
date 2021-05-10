@@ -13,3 +13,19 @@ services:
     volumes:
       - ./sql:/docker-entrypoint-initdb.d
     restart: unless-stopped
+
+  order:
+    build:
+      context: .
+      dockerfile: ./module/order/Dockerfile
+    depends_on:
+      - mysql
+    restart: unless-stopped
+
+  trade:
+    build:
+      context: .
+      dockerfile: ./module/trade/Dockerfile
+    depends_on:
+      - mysql
+    restart: unless-stopped
