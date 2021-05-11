@@ -45,3 +45,7 @@ INSERT INTO `cards` (`name`) VALUES
 	('Bulbasaur'),
 	('Charmander'),
 	('Squirtle');
+
+INSERT INTO `traders` () VALUES ();
+INSERT INTO `traders` () VALUES ();
+INSERT INTO `traders` () VALUES ();
