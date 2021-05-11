@@ -53,7 +53,7 @@ func (tr Trader) Create(db *gorm.DB) error {
 func (o Order) ListWithTrader(db *gorm.DB, trader Trader) ([]*Order, error) {
 	var orders []*Order
 	traderID := strconv.Itoa(trader.ID)
-	if err := db.Where("trader_id = ?", traderID).Find(&orders).Limit(50).Error; err != nil {
+	if err := db.Limit(50).Where("trader_id = ?", traderID).Order("id DESC").Find(&orders).Error; err != nil {
 		return nil, err
 	}
 	return orders, nil
@@ -62,7 +62,7 @@ func (o Order) ListWithTrader(db *gorm.DB, trader Trader) ([]*Order, error) {
 func (t Trade) ListWithCard(db *gorm.DB, card Card) ([]*Trade, error) {
 	var trades []*Trade
 	cardID := strconv.Itoa(card.ID)
-	if err := db.Where("card_id = ?", cardID).Find(&trades).Limit(50).Error; err != nil {
+	if err := db.Limit(50).Where("card_id = ?", cardID).Order("id DESC").Find(&trades).Error; err != nil {
 		return nil, err
 	}
 	return trades, nil
