@@ -1,6 +1,33 @@
 version: "3"
 
 services:
+  reverse-proxy:
+    # The official v2 Traefik docker image
+    image: traefik:v2.3
+    command:
+      # Enables the web UI
+      - "--api=true"
+      # Tells Traefik to listen to docker
+      - "--providers.docker"
+      # Set the EntryPoints
+      - "--entryPoints.web.address=:80"
+      # - "--entryPoints.websecure.address=:443"
+      - "--providers.docker.exposedByDefault=false"
+    ports:
+      # The HTTP port
+      - "5000:80"
+      # # The web UI port
+      - "8080:8080"
+    volumes:
+      # So that Traefik can listen to the Docker events
+      - /var/run/docker.sock:/var/run/docker.sock
+    # Dynamic Configuration
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.api.rule=PathPrefix(`/api`) || PathPrefix(`/dashboard`)"
+      - "traefik.http.routers.api.service=api@internal"
+      - "traefik.http.services.api.loadbalancer.server.port=80"
+
   mysql:
     image: mysql/mysql-server:5.7
     environment:
@@ -21,6 +48,12 @@ services:
     depends_on:
       - mysql
     restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.order.rule=PathPrefix(`/api/v1/order`)"
+      - "traefik.http.services.order.loadbalancer.server.port=80"
+      # - "traefik.http.routers.order.middlewares=order"
+      # - "traefik.http.middlewares.order.stripprefix.prefixes=/"
 
   trade:
     build:
@@ -29,3 +62,9 @@ services:
     depends_on:
       - mysql
     restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.trade.rule=PathPrefix(`/api/v1/trade`)"
+      - "traefik.http.services.trade.loadbalancer.server.port=80"
+      # - "traefik.http.routers.trade.middlewares=order"
+      # - "traefik.http.middlewares.trade.stripprefix.prefixes=/"
