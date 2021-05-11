@@ -1,4 +1,29 @@
 # The-trading-platform-of-Pokemon-Card-Game
+## Setup
+```
+docker-compose up -d
+```
+### Create Order:
+```
+curl -i -X POST \
+   -H "Content-Type:application/x-www-form-urlencoded" \
+   -d "trader_id=1" \ # (1~4)
+   -d "card_id=1" \ # (ex:1)
+   -d "price=1" \ # (1~10)
+   -d "order_type=sell" \ # buy or sell
+ 'http://localhost:5000/api/v1/order'
+ ```
+### Query Order for Trader:
+
+```
+curl -i -X GET \
+ 'http://localhost:5000/api/v1/orders?trader_id=1' # (ex:id=1)
+```
+### Query Trade for Card
+```
+curl -i -X GET \
+ 'http://localhost:5000/api/v1/trades?card_id=1' # (id=1~4)
+ ```
 
 # Design and implement a backend system for an online trading platform of Pokémon Trading Card Game.
 - This online trading platform trades 4 kinds of cards only: Pikachu, Bulbasaur, Charmander, and Squirtle.
@@ -17,22 +42,22 @@
 - Traders can view the latest 50 trades on each kind of cards.
 - If the sequence of orders is fixed, the results must be the same no matter how many times you execute the sequence.
 ## Basic Requirements:
-- RESTful API
-- Relational database (PostgreSQL, MySQL, ...)
-- Containerize
-- Testing
-- Gracefully shutdown
+- **RESTful API**
+- **Relational database (PostgreSQL, MySQL, ...)**
+- **Containerize**
+- **Testing**
+- **Gracefully shutdown**
 ## Advanced Requirements:
 - Multithreading
 - Maximize performance of finishing 1M orders
 - OpenAPI (Swagger)
 - Set up configs using environment variables
 - View logs on visualization dashboard (Kibana, Grafana, ...)
-- Microservice
+- **Microservice**
 - Message queue (Apache Kafka, Apache Pulsar, ...)
 - gRPC
 - GraphQL
-- Docker Compose
+- **Docker Compose**
 - Kubernetes
 - Cloud computing platforms (AWS, Azure, GCP, ...)
 - NoSQL
