@@ -7,8 +7,8 @@ docker-compose up -d
 ```
 curl -i -X POST \
    -H "Content-Type:application/x-www-form-urlencoded" \
-   -d "trader_id=1" \ # (1~4)
-   -d "card_id=1" \ # (ex:1)
+   -d "trader_id=1" \ # (ex:1)
+   -d "card_id=1" \ # (1~4)
    -d "price=1" \ # (1~10)
    -d "order_type=sell" \ # buy or sell
  'http://localhost:5000/api/v1/order'
